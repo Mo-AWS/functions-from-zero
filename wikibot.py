@@ -1,7 +1,10 @@
-import wikipedia
+import wikipedia, click
 
+@click.command()
+@click.option('--name', prompt='Wikipedia page to scrape', help='The name of the topic to search for.')
 def scrape(name="Wikipedia", length=2):
     result = wikipedia.summary(name, sentences=length)
-    return result
+    click.echo(click.style(result, bg='white', fg='green', bold=True))
 
-print(scrape("Facebook", 3))
+if __name__ == '__main__':
+    scrape()

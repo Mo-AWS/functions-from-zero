@@ -1,6 +1,8 @@
 from wikibot import scrape
+from click.testing import CliRunner
 
-def test_scrape(name="Wikipedia", length=2):
-    result = scrape(name, length)
-    assert isinstance(result, str)
-    assert len(result) > 0
+def test_wikibot():
+    runner = CliRunner()
+    result = runner.invoke(scrape, ['--name', 'Facebook'])
+    assert result.exit_code == 0
+    assert 'facebook' in result.output
