@@ -1,10 +1,12 @@
-import wikipedia, click
+import click
+from mylib.bot import scrape
 
 @click.command()
-@click.option('--name', prompt='Wikipedia page to scrape', help='The name of the topic to search for.')
-def scrape(name="Wikipedia", length=2):
-    result = wikipedia.summary(name, sentences=length)
+@click.option('--name', help='The name of the topic to search for.')
+@click.option('--length', default=2, help='The number of sentences to return.')
+def cli(name, length):
+    result = scrape(name, length=length)
     click.echo(click.style(result, bg='white', fg='green', bold=True))
 
 if __name__ == '__main__':
-    scrape()
+    cli()

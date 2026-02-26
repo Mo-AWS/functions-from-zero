@@ -3,3 +3,4 @@ black
 pytest
 wikipedia
 click
+fire
