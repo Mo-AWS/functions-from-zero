@@ -35,10 +35,22 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ secrets.AWS_REGION }}
 
+    - name: Verify AWS Identity
+      if: github.ref == 'refs/heads/main'
+      run: |
+        aws sts get-caller-identity
+        echo "Region: ${{ secrets.AWS_REGION }}"
+
     - name: Login to Amazon ECR
       if: github.ref == 'refs/heads/main'
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v2
+
+    - name: Verify ECR Repository
+      if: github.ref == 'refs/heads/main'
+      run: |
+        echo "Checking repository: ${{ secrets.ECR_REPOSITORY_NAME }}"
+        aws ecr describe-repositories --repository-names ${{ secrets.ECR_REPOSITORY_NAME }} --region ${{ secrets.AWS_REGION }}
 
     - name: Build, tag, and push image to Amazon ECR
       if: github.ref == 'refs/heads/main'
