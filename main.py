@@ -7,12 +7,12 @@ from pydantic import BaseModel
 
 app = FastAPI()
 
-class wiki(BaseModel):
+class Wiki(BaseModel):
     name: str
     length: int
 
 @app.post("/scrape")
-async def scrape_wiki(wiki: wiki):
+async def scrape_wiki(wiki: Wiki):
     result = scrape(wiki.name, wiki.length)
     payload = {"wikipage": result}
     json_compatible_item_data = jsonable_encoder(payload)
